@@ -28,7 +28,7 @@ export class UserService {
     }
   }
 
-  private encryptId(id: number): any {
+  public encryptId(id: number): any {
     try {
       const iv = crypto.randomBytes(16);
       const key = crypto.createHash('sha256').update(process.env.SECRET_KEY).digest();
