@@ -1,0 +1,8 @@
+node_modules
+dist
+Dockerfile
+.dockerignore
+.git
+.env.local
+.env.test
+coverage
