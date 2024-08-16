@@ -4,20 +4,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Task } from './entities/task.entity';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { User } from 'src/user/entities/user.entity';
 import * as crypto from 'crypto';
 
 @Injectable()
 export class TaskService {
   constructor(@InjectRepository(Task) 
-              private readonly taskRepository: Repository<Task>,
-              @InjectRepository(User)
-              private readonly userRepository: Repository<User>) {}
+              private readonly taskRepository: Repository<Task>) {}
 
-  private calculateDueDate(points: number, inclusiveDate: Date): Date {
+  public calculateDueDate(points: number, inclusiveDate: Date): Date {
     try {
-      const daysToAdd = points
-      const dueDate = new Date(inclusiveDate);
+      const daysToAdd = points;
+      const dueDate = inclusiveDate;
       dueDate.setDate(dueDate.getDate() + daysToAdd);
       return dueDate;
     } catch (error) {
@@ -27,25 +24,12 @@ export class TaskService {
 
   async create(createTaskDto: CreateTaskDto, autor: string) {
     try {
-      // const existingTasks = await this.taskRepository.find()
-      // const existingUser = await this.userRepository.find()
-
-      // existingTasks.forEach(task => {
-      //   existingUser.forEach(user => {
-      //     if (task.idUser === user.id) {
-      //       throw new Error('Task already assigned to user')
-      //     }
-      //   });
-      // });
-
-      if (!this.isFibonacci(createTaskDto.points)) {
+      if (!this.isFibonacci(createTaskDto.points))
         throw Error('Points must be in the Fibonacci sequence');
-      }
 
       createTaskDto.inclusiveDate = new Date();
       createTaskDto.dueDate = this.calculateDueDate(createTaskDto.points, createTaskDto.inclusiveDate);
       createTaskDto.userId = this.decryptId(autor);
-
 
       return this.taskRepository.save(createTaskDto).then(() => {
         return {message: 'Task created successfully'};
@@ -55,7 +39,7 @@ export class TaskService {
     }
   }
 
-  private decryptId(token: string): number {
+  public decryptId(token: string): number {
     try {
       const [ivHex, encrypted] = token.split(':');
       const iv = Buffer.from(ivHex, 'hex');
@@ -85,7 +69,7 @@ export class TaskService {
     }
   }
 
-  private isFibonacci(num: number): boolean {
+  public isFibonacci(num: number): boolean {
     try {
       if (num === 1) return true;
       if (num <= 0) return false;
@@ -106,6 +90,16 @@ export class TaskService {
       const findTask = await this.taskRepository.findOne({where: {id: id}})
       if(!findTask)
         throw new Error(`Task with id ${id} not found`)
+
+      if (updateTaskDto.points !== undefined) {
+        if (!this.isFibonacci(updateTaskDto.points)) {
+          throw Error('Points must be in the Fibonacci sequence');
+        }else {
+          updateTaskDto.dueDate = this.calculateDueDate(updateTaskDto.points, findTask.inclusiveDate);
+          updateTaskDto.updatedAt = new Date();
+        }
+      }
+
       return this.taskRepository.update(id, updateTaskDto).then(() => {
         return {message: 'Task updated successfully'};
       });

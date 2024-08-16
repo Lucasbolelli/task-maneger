@@ -7,4 +7,5 @@ export class CreateTaskDto {
     dueDate?: Date;
     priority?: number;
     userId?: number;
+    updatedAt?: Date;
 }

@@ -19,6 +19,9 @@ export class Task {
     @Column('timestamp', { nullable: false})
     dueDate: Date;
 
+    @Column('timestamp', { nullable: true})
+    updatedAt: Date;
+
     @Column('int', {nullable: false})
     points: number;
 
