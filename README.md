@@ -31,7 +31,7 @@ $ npm run test
 
 ## Support
 
-Olá, aqui esta a aplicacao de gestao de tarefas. disponibilizarei tambem a collection que utilizei no postman, claro que a aplicacao ja tem a docmentacao disponivel no swagger(link: localhost:3000/swagger-ui). 
+Olá, aqui esta a aplicacao de gestao de tarefas. disponibilizarei tambem a collection que utilizei no postman(esta nos arquivos root da aplicao), claro que a aplicacao ja tem a docmentacao disponivel no swagger(link: localhost:3000/swagger-ui). 
 
 Agradeco a Oportunidade !!
 
