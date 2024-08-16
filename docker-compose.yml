@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app:
+    image: task-maneger
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_SCHEMA: ${DATABASE_SCHEMA}
+      DATABASE: ${DATABASE}
+      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_PORT: ${DATABASE_PORT}
+      SECRET_KEY: ${SECRET_KEY}
+    env_file:
+      - .env

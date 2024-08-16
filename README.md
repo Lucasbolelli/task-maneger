@@ -6,6 +6,12 @@ $ npm install
 ```
 
 ## Running the app
+
+```Utilizacao da aplicacao
+    1 - crie um usuario, isso irá gerar um token(coloque o token no HEADER do postman, ou swagger, para acessar os seguintes endpoints: DELETE: localhost:3000/user, PATCH: localhost:3000/user, POST: localhost:3000/task, DELETE: localhost:3000/task, PATCH: localhost:3000/task)
+    
+    2 - Apartir da criacao do Usuario e token, Pode utilizar a aplicacao, normalmente e testa-la loucamente.
+```
 ```bash
 # development
 $ npm run start
