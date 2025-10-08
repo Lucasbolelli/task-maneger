@@ -37,17 +37,17 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'build',
-      '-t', 'gcr.io/$PROJECT_ID/task-manager:$COMMIT_SHA',
-      '-t', 'gcr.io/$PROJECT_ID/task-manager:latest',
+      '-t', 'gcr.io/$test-ci-cd-474501/task-manager:$COMMIT_SHA',
+      '-t', 'gcr.io/$test-ci-cd-474501/task-manager:latest',
       '.'
     ]
   
   # Push das imagens
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/task-manager:$COMMIT_SHA']
+    args: ['push', 'gcr.io/$test-ci-cd-474501/task-manager:$COMMIT_SHA']
   
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/task-manager:latest']
+    args: ['push', 'gcr.io/$test-ci-cd-474501/task-manager:latest']
   
   # Deploy para Cloud Run
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -56,7 +56,7 @@ steps:
     - 'deploy'
     - 'task-manager'
     - '--image'
-    - 'gcr.io/$PROJECT_ID/task-manager:$COMMIT_SHA'
+    - 'gcr.io/$test-ci-cd-474501/task-manager:$COMMIT_SHA'
     - '--region'
     - 'us-central1'
     - '--platform'
